@@ -27,7 +27,7 @@
                 <rowConstraints>
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 </rowConstraints>
-                <Button fx:id="addPartsButton" mnemonicParsing="false" text="Add" />
+                <Button fx:id="addPartsButton" mnemonicParsing="false" onAction="#toAddPartsWindow" text="Add" />
                 <Button fx:id="modifyPartsButton" mnemonicParsing="false" text="Modify" GridPane.columnIndex="1" />
                 <Button fx:id="deletePartsButton" mnemonicParsing="false" text="Delete" GridPane.columnIndex="2" />
             </GridPane>
