@@ -17,9 +17,9 @@ public class AppController {
     @FXML
     private Label welcomeText;
 
-    public void toAddPartsWindow(ActionEvent actionEvent) throws IOException
+    public void toPartsWindow(ActionEvent actionEvent) throws IOException
     {
-        Parent root = FXMLLoader.load(getClass().getResource("add-parts.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("partsModify.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 600, 400);
         stage.setTitle ("Add Parts");

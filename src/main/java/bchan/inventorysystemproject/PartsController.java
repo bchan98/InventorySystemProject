@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class addPartsController {
+public class PartsController {
     public TextField TextBox;
     @FXML
     private Label welcomeText;
@@ -21,10 +21,16 @@ public class addPartsController {
     {
         Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 1000, 600);
         stage.setTitle ("Inventory Management System");
         stage.setScene(scene);
         stage.show();
     }
 
+    public void inHousePartSelected(ActionEvent actionEvent) {
+    }
+
+    public void outsourcedPartSelected(ActionEvent actionEvent) {
+
+    }
 }
