@@ -14,15 +14,34 @@ import java.io.IOException;
 
 public class AppController {
     public TextField TextBox;
+    public Button modifyPartsButton;
+    public Button addPartsButton;
     @FXML
     private Label welcomeText;
 
-    public void toPartsWindow(ActionEvent actionEvent) throws IOException
+    public boolean message;
+
+    public void AddPartsWindow(ActionEvent actionEvent) throws IOException
     {
+        message = true;
+        PartsController.setIsAddOrModify(message);
         Parent root = FXMLLoader.load(getClass().getResource("partsModify.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 600, 400);
+
         stage.setTitle ("Add Parts");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void modifyPartsWindow(ActionEvent actionEvent) throws IOException {
+        message = false;
+        PartsController.setIsAddOrModify(message);
+        Parent root = FXMLLoader.load(getClass().getResource("partsModify.fxml"));
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 400);
+
+        stage.setTitle ("Modify Parts");
         stage.setScene(scene);
         stage.show();
     }

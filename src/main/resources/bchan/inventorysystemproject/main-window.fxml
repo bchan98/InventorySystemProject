@@ -41,12 +41,14 @@
                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
            </columnConstraints>
            <rowConstraints>
-             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+             <RowConstraints />
+               <RowConstraints />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
            </rowConstraints>
             <children>
-                   <Button fx:id="addPartsButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#toPartsWindow" text="Add" />
-                   <Button fx:id="modifyPartsButton" mnemonicParsing="false" text="Modify" GridPane.columnIndex="1" />
-                   <Button fx:id="deletePartsButton" mnemonicParsing="false" text="Delete" GridPane.columnIndex="2" />
+                   <Button fx:id="addPartsButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#AddPartsWindow" text="Add" GridPane.rowIndex="2" />
+                   <Button fx:id="modifyPartsButton" mnemonicParsing="false" onAction="#modifyPartsWindow" text="Modify" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                   <Button fx:id="deletePartsButton" mnemonicParsing="false" text="Delete" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
             <TableView prefHeight="461.0" prefWidth="491.0" GridPane.rowIndex="1">
