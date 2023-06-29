@@ -25,8 +25,8 @@ public class AppController implements Initializable {
     public TableColumn partNameCol;
     public TableColumn partInvCol;
     public TableColumn partPriceCol;
-    public TableView partsTable;
-    public TableView productTable;
+    public TableView<Part> partsTable;
+    public TableView<Product> productTable;
     public TableColumn productIDCol;
     public TableColumn productNameCol;
     public TableColumn productInvCol;
@@ -34,11 +34,11 @@ public class AppController implements Initializable {
     @FXML
     private Label welcomeText;
 
-    private boolean isFirst = true;
+    private static boolean isFirst = true;
 
     public boolean message;
 
-    private ObservableList<Part> partList = FXCollections.observableArrayList();
+    private ObservableList<Part> intPartList = FXCollections.observableArrayList();
     private ObservableList<Product> productList = FXCollections.observableArrayList();
 
 
@@ -71,16 +71,18 @@ public class AppController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        intPartList = Inventory.getAllParts();
+
         if(isFirst)
         {
             isFirst = false;
             Part inTest = new InHouse(1, "test", 2.00, 5, 1, 5, 22);
             Part outTest = new Outsourced (2, "outTest", 4.00, 3, 3, 15, "Tesla");
-            partList.add(inTest);
-            partList.add(outTest);
+            intPartList.add(inTest);
+            intPartList.add(outTest);
         }
 
-        partsTable.setItems(partList);
+        partsTable.setItems(intPartList);
         partIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));

@@ -64,8 +64,8 @@
                          <TextField fx:id="partInvField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                          <TextField fx:id="partPriceField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                          <TextField fx:id="partMaxField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                         <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField fx:id="PartMinField" prefHeight="25.0" prefWidth="151.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                         <TextField fx:id="varField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="partMinField" prefHeight="25.0" prefWidth="151.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                         <Label fx:id="varLabel" text="Machine ID" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
@@ -85,7 +85,7 @@
                     </rowConstraints>
                      <children>
                         <Button fx:id="cancelPartButton" mnemonicParsing="false" onAction="#toMainWindow" text="Cancel" GridPane.columnIndex="1" />
-                        <Button mnemonicParsing="false" text="Add" />
+                        <Button fx:id="addPartButton" mnemonicParsing="false" onAction="#addNewPart" text="Add" />
                      </children>
                   </GridPane>
                </children>
