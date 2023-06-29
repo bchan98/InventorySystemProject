@@ -30,8 +30,8 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             <children>
-                  <Label text="Parts" />
-                  <TextField prefHeight="25.0" promptText="Search by Part ID or Name" GridPane.columnIndex="1" />
+                  <Label alignment="TOP_LEFT" text="Parts" />
+                  <TextField promptText="Search by Part ID or Name" GridPane.columnIndex="1" />
             </children>
           </GridPane>
          <GridPane GridPane.rowIndex="2">
@@ -51,16 +51,20 @@
                    <Button fx:id="deletePartsButton" mnemonicParsing="false" text="Delete" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
-            <TableView prefHeight="461.0" prefWidth="491.0" GridPane.rowIndex="1">
+            <TableView fx:id="partsTable" prefHeight="461.0" prefWidth="491.0" GridPane.rowIndex="1">
                 <columns>
-                    <TableColumn prefWidth="75.0" text="C1" />
-                    <TableColumn prefWidth="75.0" text="C2" />
+                    <TableColumn fx:id="partIDCol" prefWidth="65.0" text="Part ID" />
+                    <TableColumn fx:id="partNameCol" prefWidth="170.0" text="Part Name" />
+                    <TableColumn fx:id="partInvCol" prefWidth="110.0" text="Inventory Level" />
+                    <TableColumn fx:id="partPriceCol" prefWidth="130.0" text="Price/Cost per Unit" />
                 </columns>
             </TableView>
-            <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="421.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TableView fx:id="productTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="421.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <columns>
-                    <TableColumn prefWidth="75.0" text="C1" />
-                    <TableColumn prefWidth="75.0" text="C2" />
+                    <TableColumn fx:id="productIDCol" prefWidth="65.0" text="Product ID" />
+                    <TableColumn fx:id="productNameCol" prefWidth="170.0" text="Product Name" />
+                    <TableColumn fx:id="productInvCol" prefWidth="110.0" text="Inventory Level" />
+                    <TableColumn fx:id="productPriceCol" prefWidth="130.0" text="Price/Cost per Unit" />
                 </columns>
             </TableView>
          <GridPane GridPane.columnIndex="1">

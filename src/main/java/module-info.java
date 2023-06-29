@@ -4,5 +4,7 @@ module bchan.inventorysystemproject {
 
 
     opens bchan.inventorysystemproject to javafx.fxml;
+    opens bchan.inventorysystemproject.Components to javafx.base;
+
     exports bchan.inventorysystemproject;
 }

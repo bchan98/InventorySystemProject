@@ -12,8 +12,10 @@ import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class PartsController {
+public class PartsController implements Initializable{
     public TextField TextBox;
     public Label isAddOrModify;
     @FXML
@@ -21,15 +23,6 @@ public class PartsController {
 
     public static boolean istrigger;
 
-    @FXML
-    public void initialize() {
-        if (istrigger == true){
-            isAddOrModify.setText("Add Part");
-        }
-        else {
-            isAddOrModify.setText("Modify Part");
-        }
-    }
 
     public void toMainWindow(ActionEvent actionEvent) throws IOException
     {
@@ -52,5 +45,15 @@ public class PartsController {
 
     public void outsourcedPartSelected(ActionEvent actionEvent) {
 
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (istrigger == true){
+            isAddOrModify.setText("Add Part");
+        }
+        else {
+            isAddOrModify.setText("Modify Part");
+        }
     }
 }
