@@ -26,7 +26,11 @@ public class Inventory {
             InHouse modPartIN = (InHouse) modPart;
             modPartIN.setMachineID(((InHouse) passPart).getMachineID());
         }
-        else {
+        else if (((modPart instanceof InHouse) && (passPart instanceof Outsourced)) || ((modPart instanceof Outsourced) && (passPart instanceof InHouse)))  {
+            allParts.remove(pIDIndex -1);
+            allParts.add(pIDIndex -1, passPart);
+        }
+        else if ((modPart instanceof Outsourced) && (passPart instanceof Outsourced) ){
             Outsourced outPartIN = (Outsourced) modPart;
             outPartIN.setCompanyName(((Outsourced) passPart).getCompanyName());
         }
