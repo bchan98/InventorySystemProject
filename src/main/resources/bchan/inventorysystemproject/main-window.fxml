@@ -48,7 +48,7 @@
             <children>
                    <Button fx:id="addPartsButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#AddPartsWindow" text="Add" GridPane.rowIndex="2" />
                    <Button fx:id="modifyPartsButton" mnemonicParsing="false" onAction="#modifyPartsWindow" text="Modify" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                   <Button fx:id="deletePartsButton" mnemonicParsing="false" text="Delete" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                   <Button fx:id="deletePartsButton" mnemonicParsing="false" onAction="#deletePartCommand" text="Delete" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
             <TableView fx:id="partsTable" prefHeight="461.0" prefWidth="491.0" GridPane.rowIndex="1">

@@ -3,6 +3,7 @@ package bchan.inventorysystemproject;
 import bchan.inventorysystemproject.Components.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.stage.Popup;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppController implements Initializable {
@@ -107,7 +110,10 @@ public class AppController implements Initializable {
      **/
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
         intPartList = Inventory.getAllParts();
+        FilteredList<Part> showList = new FilteredList<>(intPartList, Part -> Part != null);
 
         if(isFirst)
         {
@@ -118,11 +124,23 @@ public class AppController implements Initializable {
             intPartList.add(outTest);
         }
 
-        partsTable.setItems(intPartList);
+        partsTable.setItems(showList);
         partIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+    }
+
+    public void deletePartCommand(ActionEvent actionEvent) {
+        Alert confDel = new Alert(Alert.AlertType.CONFIRMATION);
+        confDel.setTitle("Confirm deletion");
+        confDel.setHeaderText("Deletion Warning");
+        confDel.setContentText("Are you sure you want to delete this part?");
+
+        Optional<ButtonType> result = confDel.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Inventory.deletePart(partsTable.getSelectionModel().getSelectedItem());
+        }
     }
 }

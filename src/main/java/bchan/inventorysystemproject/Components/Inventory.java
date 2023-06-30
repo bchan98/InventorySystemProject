@@ -13,6 +13,19 @@ public class Inventory {
         allParts.add(nuPart);
     }
 
+    public static boolean deletePart (Part passPart) {
+        Part delPart = passPart;
+        int indCheck = delPart.getId();
+        if (allParts.get(indCheck - 1) != null) {
+            allParts.remove(indCheck - 1);
+            allParts.add(indCheck - 1, null);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public static void updatePart(int pIDIndex, Part passPart){
         Part modPart = allParts.get(pIDIndex - 1);
 
