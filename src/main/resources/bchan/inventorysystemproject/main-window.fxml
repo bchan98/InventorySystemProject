@@ -97,5 +97,5 @@
          </GridPane>
       </children>
    </GridPane>
-   <Button fx:id="exitButton" mnemonicParsing="false" text="Exit" />
+   <Button fx:id="exitButton" mnemonicParsing="false" onAction="#closeProgram" text="Exit" />
 </VBox>

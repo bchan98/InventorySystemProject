@@ -35,6 +35,7 @@ public class AppController implements Initializable {
     public TableColumn productNameCol;
     public TableColumn productInvCol;
     public TableColumn productPriceCol;
+    public Button exitButton;
     @FXML
     private Label welcomeText;
 
@@ -142,5 +143,10 @@ public class AppController implements Initializable {
         if (result.get() == ButtonType.OK) {
             Inventory.deletePart(partsTable.getSelectionModel().getSelectedItem());
         }
+    }
+
+    public void closeProgram(ActionEvent actionEvent) {
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.close();
     }
 }
