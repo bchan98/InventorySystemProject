@@ -26,14 +26,15 @@ public class PartsController implements Initializable{
     public TextField partMaxField;
     public TextField partMinField;
     public TextField varField;
+    public Label varLabel;
     @FXML
     private Label welcomeText;
 
     private static boolean pOriginFlag = true;
 
-    public static boolean istrigger;
+    public static boolean isTrigger;
 
-    private static int partIDCounter = 2;
+    private static int partIDCounter = 3;
     public void toMainWindow(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
@@ -48,46 +49,86 @@ public class PartsController implements Initializable{
 
 
     public static void setIsAddOrModify(boolean trigger){
-        istrigger = trigger;
+        isTrigger = trigger;
     }
     public void inHousePartSelected(ActionEvent actionEvent) {
         pOriginFlag = true;
+        varLabel.setText("Machine ID");
     }
 
     public void outsourcedPartSelected(ActionEvent actionEvent) {
         pOriginFlag = false;
+        varLabel.setText("Company Name");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (istrigger == true){
+        if (isTrigger){
             isAddOrModify.setText("Add Part");
         }
         else {
             isAddOrModify.setText("Modify Part");
+            partNameField.setText(AppController.sendName);
+            partInvField.setText(String.valueOf(AppController.sendStock));
+            partPriceField.setText(String.valueOf(AppController.sendPrice));
+            partMinField.setText(String.valueOf(AppController.sendMin));
+            partMaxField.setText(String.valueOf(AppController.sendMax));
+
+            if (AppController.sendInOut == true) {
+                inHousePart.setSelected(true);
+                varField.setText(String.valueOf(AppController.sendVarIn));
+                pOriginFlag = true;
+                varLabel.setText("Machine ID");
+            } else if (!AppController.sendInOut) {
+                outsourcedPart.setSelected(true);
+                varField.setText(AppController.sendVarOut);
+                pOriginFlag = false;
+                varLabel.setText("Company Name");
+            }
         }
+
+
+
     }
 
-    public void addNewPart(ActionEvent actionEvent) throws IOException {
+    /**
+     * Sets part information to allParts from the Inventory class. Scrapes data from the text fields and uses the information to generate a new Part object which is then sent and stored in the allParts list.
+     * @param actionEvent
+     * @throws IOException
+     */
+    public void setNewPart(ActionEvent actionEvent) throws IOException {
 
-        String addName = partNameField.getText();
-        int addInv = Integer.parseInt(partInvField.getText());
-        double addPri = Double.parseDouble(partPriceField.getText());
-        int addMaxFi = Integer.parseInt(partMaxField.getText());
-        int addMinFi = Integer.parseInt(partMinField.getText());
+        int setID = AppController.sendID;
+        String setName = partNameField.getText();
+        int setInv = Integer.parseInt(partInvField.getText());
+        double setPri = Double.parseDouble(partPriceField.getText());
+        int setMaxFi = Integer.parseInt(partMaxField.getText());
+        int setMinFi = Integer.parseInt(partMinField.getText());
 
-        if(pOriginFlag){
-            int addMachID = Integer.parseInt(varField.getText());
-            Part addedPart = new InHouse(partIDCounter, addName, addPri, addInv, addMinFi, addMaxFi, addMachID);
-            Inventory.addPart(addedPart);
+        if(isTrigger) {
+            if (pOriginFlag) {
+                int addMachID = Integer.parseInt(varField.getText());
+                Part addedPart = new InHouse(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addMachID);
+                Inventory.addPart(addedPart);
+            } else {
+                String addComp = varField.getText();
+                Part addedPart = new Outsourced(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addComp);
+                Inventory.addPart(addedPart);
+            }
+            partIDCounter++;
         }
-        else{
-            String addComp = varField.getText();
-            Part addedPart = new Outsourced(partIDCounter, addName, addPri, addInv, addMinFi, addMaxFi, addComp);
-            Inventory.addPart(addedPart);
+        else {
+            if (pOriginFlag) {
+                int addMachID = Integer.parseInt(varField.getText());
+                Part addedPart = new InHouse(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addMachID);
+                Inventory.updatePart(setID, addedPart);
+            } else {
+                String addComp = varField.getText();
+                Part addedPart = new Outsourced(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addComp);
+                Inventory.updatePart(setID, addedPart);
+            }
         }
 
-        partIDCounter++;
 
         Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();

@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AppController implements Initializable {
+    // variables for specific widgets from JavaFXML
     public TextField TextBox;
     public Button modifyPartsButton;
     public Button addPartsButton;
@@ -38,6 +39,18 @@ public class AppController implements Initializable {
 
     public boolean message;
 
+    // variables to be sent to modify window
+
+    public static int sendID;
+    public static String sendName;
+    public static double sendPrice;
+    public static int sendStock;
+    public static int sendMin;
+    public static int sendMax;
+    public static int sendVarIn;
+    public static String sendVarOut;
+    public static boolean sendInOut = true;
+
     private ObservableList<Part> intPartList = FXCollections.observableArrayList();
     private ObservableList<Product> productList = FXCollections.observableArrayList();
 
@@ -56,10 +69,29 @@ public class AppController implements Initializable {
         stage.show();
     }
 
+    /**
+    Method to open the Modify Parts Window. Passes selected Part object to have data manipulated and modified.
+     **/
     public void modifyPartsWindow(ActionEvent actionEvent) throws IOException
     {
         message = false;
         PartsController.setIsAddOrModify(message);
+
+        Part sendP = (Part) partsTable.getSelectionModel().getSelectedItem();
+        sendID = sendP.getId();
+        sendName = sendP.getName();
+        sendPrice = sendP.getPrice();
+        sendStock = sendP.getStock();
+        sendMin = sendP.getMin();
+        sendMax = sendP.getMax();
+
+        if (sendP instanceof InHouse){
+            sendVarIn = ((InHouse) sendP).getMachineID();
+            sendInOut = true;
+        } else if (sendP instanceof Outsourced) {
+            sendVarOut = ((Outsourced) sendP).getCompanyName();
+            sendInOut = false;
+        }
 
         Parent root = FXMLLoader.load(getClass().getResource("partsModify.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -70,6 +102,10 @@ public class AppController implements Initializable {
     }
 
     @Override
+    /**
+     Method to load data into TableViews. Data is obtained from the allParts list and allProducts list from Inventory class. Additionally, template data is generated and inserted into the two tables when required.
+     **/
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         intPartList = Inventory.getAllParts();
 

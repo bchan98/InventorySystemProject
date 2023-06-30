@@ -85,7 +85,7 @@
                     </rowConstraints>
                      <children>
                         <Button fx:id="cancelPartButton" mnemonicParsing="false" onAction="#toMainWindow" text="Cancel" GridPane.columnIndex="1" />
-                        <Button fx:id="addPartButton" mnemonicParsing="false" onAction="#addNewPart" text="Add" />
+                        <Button fx:id="savePartButton" mnemonicParsing="false" onAction="#setNewPart" text="Save" />
                      </children>
                   </GridPane>
                </children>
