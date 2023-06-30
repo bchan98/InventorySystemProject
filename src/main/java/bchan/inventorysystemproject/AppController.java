@@ -39,11 +39,13 @@ public class AppController implements Initializable {
     @FXML
     private Label welcomeText;
 
+    // Variable to check whether the program has been run before to insert dummy data
     private static boolean isFirst = true;
 
+    // Variable to check whether Add or Modify was selected
     public boolean message;
 
-    // variables to be sent to modify window
+    // variables to be sent to modify Parts window
 
     public static int sendID;
     public static String sendName;
@@ -55,11 +57,16 @@ public class AppController implements Initializable {
     public static String sendVarOut;
     public static boolean sendInOut = true;
 
+    // Lists to have data sent into from Inventory
     private ObservableList<Part> intPartList = FXCollections.observableArrayList();
     private ObservableList<Product> productList = FXCollections.observableArrayList();
 
 
-
+    /** Method to add a part to allParts. Passes information to inform partsModify window that new data is being added.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void AddPartsWindow(ActionEvent actionEvent) throws IOException
     {
         message = true;
@@ -74,7 +81,7 @@ public class AppController implements Initializable {
     }
 
     /**
-    Method to open the Modify Parts Window. Passes selected Part object to have data manipulated and modified.
+    Method to open the Modify Parts Window. Passes selected Part object to have data manipulated and modified, as well as information to inform partsModify window that old data is being modified.
      **/
     public void modifyPartsWindow(ActionEvent actionEvent) throws IOException
     {
@@ -107,7 +114,7 @@ public class AppController implements Initializable {
 
     @Override
     /**
-     Method to load data into TableViews. Data is obtained from the allParts list and allProducts list from Inventory class. Additionally, template data is generated and inserted into the two tables when required.
+     Method to initialize the program. Sends data from Tableviews, with data obtained from the allParts list and allProducts list from Inventory class. Additionally, template data is generated and inserted into the two tables when required.
      **/
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -133,6 +140,10 @@ public class AppController implements Initializable {
 
     }
 
+    /** Method to initiate part deletion from the delete button command. Selects highlighted part from cursor and runs a confirmation window before calling the deletePart from the Inventory class.
+     *
+     * @param actionEvent
+     */
     public void deletePartCommand(ActionEvent actionEvent) {
         Alert confDel = new Alert(Alert.AlertType.CONFIRMATION);
         confDel.setTitle("Confirm deletion");
@@ -145,6 +156,10 @@ public class AppController implements Initializable {
         }
     }
 
+    /** Method to handle window closing. Closes the window upon button press of the exitButton button.
+     *
+     * @param actionEvent
+     */
     public void closeProgram(ActionEvent actionEvent) {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
