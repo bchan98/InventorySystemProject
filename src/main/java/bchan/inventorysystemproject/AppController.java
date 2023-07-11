@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.stage.Popup;
 
 import java.io.IOException;
 import java.net.URL;
@@ -121,22 +120,34 @@ public class AppController implements Initializable {
 
 
         intPartList = Inventory.getAllParts();
-        FilteredList<Part> showList = new FilteredList<>(intPartList, Part -> Part != null);
+        FilteredList<Part> showPartsList = new FilteredList<>(intPartList, Part -> Part != null);
+
+        productList = Inventory.getAllProducts();
+        FilteredList<Product> showProductsList = new FilteredList<>(productList, Product -> Product != null);
 
         if(isFirst)
         {
             isFirst = false;
             Part inTest = new InHouse(1, "test", 2.00, 5, 1, 5, 22);
             Part outTest = new Outsourced (2, "outTest", 4.00, 3, 3, 15, "Tesla");
-            intPartList.add(inTest);
-            intPartList.add(outTest);
+            Inventory.addPart(inTest);
+            Inventory.addPart(outTest);
+
+            Product prodTest = new Product(1, "Donkey Kong", 4.95, 1, 1, 3);
+            Inventory.addProduct(prodTest);
         }
 
-        partsTable.setItems(showList);
+        partsTable.setItems(showPartsList);
         partIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        productTable.setItems(showProductsList);
+        productIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
     }
 
@@ -163,5 +174,49 @@ public class AppController implements Initializable {
     public void closeProgram(ActionEvent actionEvent) {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
+    }
+
+    public void addProductsWindow(ActionEvent actionEvent) throws IOException {
+        message = true;
+        ProductsController.setIsAddOrModify(message);
+
+        Parent root = FXMLLoader.load(getClass().getResource("products-window.fxml"));
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 550, 800);
+        stage.setTitle ("Add Products");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void deleteProductCommand(ActionEvent actionEvent) {
+        Alert confDel = new Alert(Alert.AlertType.CONFIRMATION);
+        confDel.setTitle("Confirm deletion");
+        confDel.setHeaderText("Deletion Warning");
+        confDel.setContentText("Are you sure you want to delete this product?");
+
+        Optional<ButtonType> result = confDel.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Inventory.deleteProduct(productTable.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    public void modifyProductsWindow(ActionEvent actionEvent) throws IOException {
+        message = false;
+        ProductsController.setIsAddOrModify(message);
+
+        Product sendPro = (Product) productTable.getSelectionModel().getSelectedItem();
+        sendID = sendPro.getId();
+        sendName = sendPro.getName();
+        sendPrice = sendPro.getPrice();
+        sendStock = sendPro.getStock();
+        sendMin = sendPro.getMin();
+        sendMax = sendPro.getMax();
+
+        Parent root = FXMLLoader.load(getClass().getResource("products-window.fxml"));
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 800, 800);
+        stage.setTitle ("Modify Parts");
+        stage.setScene(scene);
+        stage.show();
     }
 }

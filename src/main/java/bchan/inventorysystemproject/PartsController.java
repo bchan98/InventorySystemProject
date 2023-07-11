@@ -27,6 +27,7 @@ public class PartsController implements Initializable{
     public TextField partMinField;
     public TextField varField;
     public Label varLabel;
+    public TextField partIDField;
     @FXML
     private Label welcomeText;
 
@@ -68,6 +69,7 @@ public class PartsController implements Initializable{
         }
         else {
             isAddOrModify.setText("Modify Part");
+            partIDField.setText(String.valueOf(AppController.sendID));
             partNameField.setText(AppController.sendName);
             partInvField.setText(String.valueOf(AppController.sendStock));
             partPriceField.setText(String.valueOf(AppController.sendPrice));

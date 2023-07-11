@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 public class Inventory {
 
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
-    private ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     public static void addPart(Part passPart){
         Part nuPart = passPart;
@@ -52,5 +52,34 @@ public class Inventory {
 
     public static javafx.collections.ObservableList<Part> getAllParts(){
         return allParts;
+    }
+
+    public static ObservableList<Product> getAllProducts() { return allProducts; }
+
+    public static void addProduct(Product passProduct) {
+        Product nuProduct = passProduct;
+        allProducts.add(nuProduct);
+    }
+
+    public static boolean deleteProduct (Product passProduct) {
+        Product delProduct = passProduct;
+        int indCheck = delProduct.getId();
+        if (allProducts.get(indCheck - 1) != null) {
+            allProducts.remove(indCheck - 1);
+            allProducts.add(indCheck - 1, null);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static void updateProduct(int productIDIndex, Product passProduct){
+        Product modProduct = allProducts.get(productIDIndex - 1);
+        modProduct.setName(passProduct.getName());
+        modProduct.setPrice(passProduct.getPrice());
+        modProduct.setStock(passProduct.getStock());
+        modProduct.setMax(passProduct.getMax());
+        modProduct.setMin(passProduct.getMin());
     }
 }
