@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class MainApplication extends Application {
     @Override
+    // javadoc is found in the zip folder in the folder "javadocFiles"
     /** This is the main method that starts up the application.
      *
      */

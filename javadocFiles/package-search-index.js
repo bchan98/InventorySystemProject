@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"bchan.inventorysystemproject","l":"bchan.inventorysystemproject"},{"m":"bchan.inventorysystemproject","l":"bchan.inventorysystemproject.Components"}];updateSearchResults();
