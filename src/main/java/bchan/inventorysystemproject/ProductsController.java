@@ -47,8 +47,17 @@ public class ProductsController implements Initializable {
     public TableColumn assInvCol;
     public TableColumn assPriceCol;
     public TextField availPartField;
+    public Label checkInvInt;
+    public Label checkPrDoub;
+    public Label checkMaxInt;
+    public Label checkMinInt;
+    public Label checkMinMax;
+    public Label checkInvValid;
 
     private boolean isFirstAssItem = false;
+
+    private boolean allowExecution = true;
+    private boolean secondCheck = true;
 
     private ObservableList<Part> intAssociatedPartList;
     private ObservableList<Part> intAvailablePartList;
@@ -108,32 +117,88 @@ public class ProductsController implements Initializable {
     }
 
     public void saveChanges(ActionEvent actionEvent) throws IOException {
-
+        // initializes variables
         int setID = Integer.parseInt(prodIDField.getText());
         String setName = prodNameField.getText();
-        int setInv = Integer.parseInt(prodInvField.getText());
-        double setPrice = Double.parseDouble(prodPriceField.getText());
-        int setMin = Integer.parseInt(prodMinField.getText());
-        int setMax = Integer.parseInt(prodMaxField.getText());
-        Product nuProduct = new Product(setID, setName, setPrice, setInv, setMin, setMax);
+        int setInv = 0;
+        double setPrice = 0;
+        int setMin = 0;
+        int setMax = 0;
 
-        if(isTrigger) {
-            Inventory.addProduct(nuProduct);
-            productIDCounter++;
+        // clears text fields that may have previously had errors
+        checkInvInt.setText("");
+        checkPrDoub.setText("");
+        checkMaxInt.setText("");
+        checkMinInt.setText("");
+        checkMinMax.setText("");
+        checkInvValid.setText("");
+
+        // checks logic to determine whether correct values have been supplied to each field
+        try {
+            setInv = Integer.parseInt(prodInvField.getText());
+        } catch (NumberFormatException numberFormatException){
+            allowExecution = false;
+            checkInvInt.setText("Inventory is currently not an integer.");
         }
-        else if(!isTrigger){
-            Inventory.updateProduct(setID, nuProduct);
+        try {
+            setPrice = Double.parseDouble(prodPriceField.getText());
+        } catch (NumberFormatException numberFormatException){
+            allowExecution = false;
+            checkPrDoub.setText("Price is currently not a number");
+        }
+        try {
+            setMax = Integer.parseInt(prodMaxField.getText());
+        } catch (NumberFormatException numberFormatException){
+            allowExecution = false;
+            secondCheck = false;
+            checkMaxInt.setText("Maximum stock is currently not an integer.");
+        }
+        try {
+            setMin = Integer.parseInt(prodMinField.getText());
+        } catch (NumberFormatException numberFormatException){
+            allowExecution = false;
+            secondCheck = false;
+            checkMinInt.setText("Minimum stock is currently not an integer.");
+        }
+        if(Integer.parseInt(prodMinField.getText()) > Integer.parseInt(prodMaxField.getText()))
+        {
+            allowExecution = false;
+            checkMinMax.setText("The maximum stock is currently larger than the minimum stock");
+        }
+        if(secondCheck = true) {
+            if(setInv > setMax || setInv < setMin) {
+                allowExecution = false;
+                checkInvValid.setText("The current inventory value is invalid.");
+            }
+        }
+        else{
+            System.out.println("The inventory value is acceptable.");
+            allowExecution = true;
         }
 
-        Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
-        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1000, 600);
+        if (allowExecution) {
+            setInv = Integer.parseInt(prodInvField.getText());
+            setPrice = Double.parseDouble(prodPriceField.getText());
+            setMin = Integer.parseInt(prodMinField.getText());
+            setMax = Integer.parseInt(prodMaxField.getText());
+            Product nuProduct = new Product(setID, setName, setPrice, setInv, setMin, setMax);
 
-        stage.setTitle ("Inventory Management System");
+            if (isTrigger) {
+                Inventory.addProduct(nuProduct);
+                productIDCounter++;
+            } else if (!isTrigger) {
+                Inventory.updateProduct(setID, nuProduct);
+            }
 
-        stage.setScene(scene);
-        stage.show();
+            Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1000, 600);
 
+            stage.setTitle("Inventory Management System");
+
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public static void setIsAddOrModify(boolean trigger){
