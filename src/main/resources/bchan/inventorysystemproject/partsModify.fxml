@@ -90,6 +90,17 @@
                   </GridPane>
                </children>
             </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="checkInvInt" />
+                  <Label fx:id="checkPrDoub" />
+                  <Label fx:id="checkMaxInt" />
+                  <Label fx:id="checkMinInt" />
+                  <Label fx:id="checkVarInt" />
+                  <Label fx:id="checkMinMax" />
+                  <Label fx:id="checkInvValid" />
+               </children>
+            </VBox>
          </children>
       </VBox>
    </children>

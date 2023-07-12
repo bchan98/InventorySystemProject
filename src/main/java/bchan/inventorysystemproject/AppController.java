@@ -217,15 +217,47 @@ public class AppController implements Initializable {
 
         Parent root = FXMLLoader.load(getClass().getResource("products-window.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 800);
+        Scene scene = new Scene(root, 900, 700);
         stage.setTitle ("Modify Parts");
         stage.setScene(scene);
         stage.show();
     }
 
     public void searchPart(ActionEvent actionEvent) {
+        ObservableList<Part> nuPartList = FXCollections.observableArrayList();
+        nuPartList.clear();
+        boolean checkType = true;
+        try {
+            int numResult = Integer.parseInt(searchPartField.getText());
+        } catch (NumberFormatException numberFormatException) {
+            checkType = false;
+        }
+        if(checkType){
+            nuPartList = Inventory.lookupPart(Integer.parseInt(searchPartField.getText()));
+        }
+        else{
+            nuPartList = Inventory.lookupPart(searchPartField.getText());
+        }
+        partsTable.setItems(nuPartList);
+        System.out.println(nuPartList.size());
     }
 
     public void searchProduct(ActionEvent actionEvent) {
+        ObservableList<Product> nuProductList = FXCollections.observableArrayList();
+        nuProductList.clear();
+        boolean checkType = true;
+        try {
+            int numResult = Integer.parseInt(searchProductField.getText());
+        } catch (NumberFormatException numberFormatException) {
+            checkType = false;
+        }
+        if(checkType) {
+            nuProductList = Inventory.lookupProduct(Integer.parseInt(searchProductField.getText()));
+        }
+        else {
+            nuProductList = Inventory.lookupProduct(searchProductField.getText());
+        }
+        productTable.setItems(nuProductList);
+        System.out.println(nuProductList.size());
     }
 }

@@ -75,7 +75,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   </rowConstraints>
                                    <children>
-                                      <TextField fx:id="searchAsProd" prefWidth="50.0" promptText="Search by Part ID or Name" GridPane.columnIndex="1" GridPane.hgrow="NEVER">
+                                      <TextField fx:id="availPartField" onAction="#searchAvailPart" prefWidth="50.0" promptText="Search by Part ID or Name" GridPane.columnIndex="1" GridPane.hgrow="NEVER">
                                 </TextField>
                                    </children>
                                 </GridPane>

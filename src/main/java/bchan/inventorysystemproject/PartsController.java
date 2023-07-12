@@ -28,6 +28,13 @@ public class PartsController implements Initializable{
     public TextField varField;
     public Label varLabel;
     public TextField partIDField;
+    public Label checkInvInt;
+    public Label checkPrDoub;
+    public Label checkMaxInt;
+    public Label checkMinInt;
+    public Label checkVarInt;
+    public Label checkMinMax;
+    public Label checkInvValid;
     @FXML
     private Label welcomeText;
 
@@ -36,6 +43,7 @@ public class PartsController implements Initializable{
     public static boolean isTrigger;
 
     private static int partIDCounter = 3;
+
     public void toMainWindow(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
@@ -99,46 +107,109 @@ public class PartsController implements Initializable{
      * @throws IOException
      */
     public void setNewPart(ActionEvent actionEvent) throws IOException {
-
-        int setID = AppController.sendID;
+        // resets test variables
+        int setID = Integer.parseInt(partIDField.getText());
+        boolean allowExecution = true;
+        boolean secondCheck = true;
+        int setInv = 0;
+        double setPri = 0;
+        int setMaxFi = 0;
+        int setMinFi = 0;
         String setName = partNameField.getText();
-        int setInv = Integer.parseInt(partInvField.getText());
-        double setPri = Double.parseDouble(partPriceField.getText());
-        int setMaxFi = Integer.parseInt(partMaxField.getText());
-        int setMinFi = Integer.parseInt(partMinField.getText());
 
-        if(isTrigger) {
-            if (pOriginFlag) {
-                int addMachID = Integer.parseInt(varField.getText());
-                Part addedPart = new InHouse(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addMachID);
-                Inventory.addPart(addedPart);
-            } else {
-                String addComp = varField.getText();
-                Part addedPart = new Outsourced(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addComp);
-                Inventory.addPart(addedPart);
-            }
-            partIDCounter++;
+        // clears any error messages that may have previously appeared
+        checkInvInt.setText("");
+        checkPrDoub.setText("");
+        checkMaxInt.setText("");
+        checkMinInt.setText("");
+        checkMinMax.setText("");
+        checkInvValid.setText("");
+        checkVarInt.setText("");
+
+        // checks logic to determine whether correct values have been supplied to each field
+        try {
+            setInv = Integer.parseInt(partInvField.getText());
+        } catch (NumberFormatException numberFormatException){
+            allowExecution = false;
+            checkInvInt.setText("Inventory is currently not an integer.");
         }
-        else {
-            if (pOriginFlag) {
-                int addMachID = Integer.parseInt(varField.getText());
-                Part addedPart = new InHouse(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addMachID);
-                Inventory.updatePart(setID, addedPart);
-            } else {
-                String addComp = varField.getText();
-                Part addedPart = new Outsourced(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addComp);
-                Inventory.updatePart(setID, addedPart);
+        try {
+            setPri = Double.parseDouble(partPriceField.getText());
+        } catch (NumberFormatException numberFormatException){
+            allowExecution = false;
+            checkPrDoub.setText("Price is currently not a number");
+        }
+        try {
+            setMaxFi = Integer.parseInt(partMaxField.getText());
+        } catch (NumberFormatException numberFormatException){
+            allowExecution = false;
+            secondCheck = false;
+            checkMaxInt.setText("Maximum stock is currently not an integer.");
+        }
+        try {
+            setMinFi = Integer.parseInt(partMinField.getText());
+        } catch (NumberFormatException numberFormatException){
+            allowExecution = false;
+            secondCheck = false;
+            checkMinInt.setText("Minimum stock is currently not an integer.");
+        }
+        if(Integer.parseInt(partMinField.getText()) > Integer.parseInt(partMaxField.getText()))
+        {
+            allowExecution = false;
+            checkMinMax.setText("The maximum stock is currently larger than the minimum stock");
+        }
+        if(secondCheck = true) {
+            if(setInv > setMaxFi || setInv < setMinFi) {
+                allowExecution = false;
+                checkInvValid.setText("The current inventory value is invalid.");
+            }
+        }
+        else{
+            System.out.println("The inventory value is acceptable.");
+            allowExecution = true;
+        }
+        if(pOriginFlag) {
+            try {
+                int checkMach = Integer.parseInt(varField.getText());
+            } catch (NumberFormatException  numberFormatException) {
+                allowExecution = false;
+                checkVarInt.setText("The current machine ID is not an integer.");
             }
         }
 
+        // if all logic checks pass, modifies or adds any new part.
+        if(allowExecution) {
+            if (isTrigger) {
+                if (pOriginFlag) {
+                    int addMachID = Integer.parseInt(varField.getText());
+                    Part addedPart = new InHouse(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addMachID);
+                    Inventory.addPart(addedPart);
+                } else {
+                    String addComp = varField.getText();
+                    Part addedPart = new Outsourced(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addComp);
+                    Inventory.addPart(addedPart);
+                }
+                partIDCounter++;
+            } else {
+                if (pOriginFlag) {
+                    int addMachID = Integer.parseInt(varField.getText());
+                    Part addedPart = new InHouse(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addMachID);
+                    Inventory.updatePart(setID, addedPart);
+                } else {
+                    String addComp = varField.getText();
+                    Part addedPart = new Outsourced(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addComp);
+                    Inventory.updatePart(setID, addedPart);
+                }
+            }
 
-        Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
-        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1000, 600);
+            Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
+            Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1000, 600);
 
-        stage.setTitle ("Inventory Management System");
+            stage.setTitle ("Inventory Management System");
 
-        stage.setScene(scene);
-        stage.show();
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 }

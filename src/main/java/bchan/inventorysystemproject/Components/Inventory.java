@@ -2,11 +2,14 @@ package bchan.inventorysystemproject.Components;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 public class Inventory {
 
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    private static ObservableList<Part> someParts = FXCollections.observableArrayList();
+    private static ObservableList<Product> someProducts = FXCollections.observableArrayList();
 
     public static void addPart(Part passPart){
         Part nuPart = passPart;
@@ -81,5 +84,47 @@ public class Inventory {
         modProduct.setStock(passProduct.getStock());
         modProduct.setMax(passProduct.getMax());
         modProduct.setMin(passProduct.getMin());
+    }
+
+    public static ObservableList<Part> lookupPart(int partID) {
+        someParts.clear();
+        for(Part lookPart : allParts) {
+            if(lookPart.getId() == partID) {
+                someParts.add(lookPart);
+            }
+        }
+        return someParts;
+    }
+
+    public static ObservableList<Part> lookupPart (String partName) {
+        someParts.clear();
+        for(Part lookPart : allParts) {
+            if(lookPart.getName().contains(partName)) {
+                someParts.add(lookPart);
+            }
+        }
+        return someParts;
+    }
+
+    public static ObservableList<Product> lookupProduct (int productID) {
+        someProducts.clear();
+        for(int i = 0; i < allProducts.size(); i++) {
+            Product lookProduct = allProducts.get(i);
+            if(lookProduct.getId() == productID) {
+                someProducts.add(lookProduct);
+            }
+        }
+        return someProducts;
+    }
+
+    public static ObservableList<Product> lookupProduct (String productName) {
+        someProducts.clear();
+        for(int i = 0; i < allProducts.size(); i++) {
+            Product lookProduct = allProducts.get(i);
+            if(lookProduct.getName().contains(productName)) {
+                someProducts.add(lookProduct);
+            }
+        }
+        return someProducts;
     }
 }

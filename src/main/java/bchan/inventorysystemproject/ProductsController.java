@@ -1,6 +1,7 @@
 package bchan.inventorysystemproject;
 
 import bchan.inventorysystemproject.Components.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -45,6 +46,7 @@ public class ProductsController implements Initializable {
     public TableColumn assNameCol;
     public TableColumn assInvCol;
     public TableColumn assPriceCol;
+    public TextField availPartField;
 
     private boolean isFirstAssItem = false;
 
@@ -164,5 +166,24 @@ public class ProductsController implements Initializable {
 
             isFirstAssItem = false;
         }
+    }
+
+    public void searchAvailPart(ActionEvent actionEvent) {
+            ObservableList<Part> nuPartList = FXCollections.observableArrayList();
+            nuPartList.clear();
+            boolean checkType = true;
+            try {
+                int numResult = Integer.parseInt(availPartField.getText());
+            } catch (NumberFormatException numberFormatException) {
+                checkType = false;
+            }
+            if(checkType){
+                nuPartList = Inventory.lookupPart(Integer.parseInt(availPartField.getText()));
+            }
+            else{
+                nuPartList = Inventory.lookupPart(availPartField.getText());
+            }
+            availPartsTable.setItems(nuPartList);
+            System.out.println(nuPartList.size());
     }
 }
