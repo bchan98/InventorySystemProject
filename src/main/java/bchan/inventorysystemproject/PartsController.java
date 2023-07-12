@@ -44,6 +44,11 @@ public class PartsController implements Initializable{
 
     private static int partIDCounter = 3;
 
+    /** This method sends the user to the main window upon pressing the cancel button.
+     *
+     * @param actionEvent This event triggers when the cancel button is pressed.
+     * @throws IOException
+     */
     public void toMainWindow(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
@@ -56,27 +61,44 @@ public class PartsController implements Initializable{
         stage.show();
     }
 
-
+    /** This method passes information from the main window to determine whether a part is being added or modified.
+     *
+     * @param trigger The boolean to determine whether a part is modified or not
+     */
     public static void setIsAddOrModify(boolean trigger){
         isTrigger = trigger;
     }
+
+    /** This method signals that the current product is an In-house part.
+     *
+     * @param actionEvent This is triggered when the inHouse radio button is selected
+     */
     public void inHousePartSelected(ActionEvent actionEvent) {
         pOriginFlag = true;
         varLabel.setText("Machine ID");
     }
 
+    /** This method signals taht the current product is an Outsourced part.
+     *
+     * @param actionEvent This is triggered when the outsourced radio button is selected
+     */
     public void outsourcedPartSelected(ActionEvent actionEvent) {
         pOriginFlag = false;
         varLabel.setText("Company Name");
     }
 
     @Override
+    /** This method executes upon the window initialization and populates data to the various text fields.
+     *
+     */
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // checks whether a part is being added or modified
         if (isTrigger){
             isAddOrModify.setText("Add Part");
         }
         else {
             isAddOrModify.setText("Modify Part");
+            // passes in information from main window
             partIDField.setText(String.valueOf(AppController.sendID));
             partNameField.setText(AppController.sendName);
             partInvField.setText(String.valueOf(AppController.sendStock));
@@ -84,6 +106,7 @@ public class PartsController implements Initializable{
             partMinField.setText(String.valueOf(AppController.sendMin));
             partMaxField.setText(String.valueOf(AppController.sendMax));
 
+            // passes information on the part to determine which radio button should be selected when the screen loads
             if (AppController.sendInOut == true) {
                 inHousePart.setSelected(true);
                 varField.setText(String.valueOf(AppController.sendVarIn));
@@ -96,12 +119,9 @@ public class PartsController implements Initializable{
                 varLabel.setText("Company Name");
             }
         }
-
-
-
     }
 
-    /**
+    /** This method attempts to save data to the allParts list.
      * Sets part information to allParts from the Inventory class. Scrapes data from the text fields and uses the information to generate a new Part object which is then sent and stored in the allParts list.
      * @param actionEvent
      * @throws IOException
