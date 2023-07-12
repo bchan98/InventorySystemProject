@@ -293,7 +293,14 @@ public class AppController implements Initializable {
 
         //sets partsTable to display relevant information.
         partsTable.setItems(nuPartList);
-        System.out.println(nuPartList.size());
+
+        if(nuPartList.size() == 0) {
+            Alert noPartResults = new Alert(Alert.AlertType.WARNING);
+            noPartResults.setTitle("Warning");
+            noPartResults.setHeaderText("No parts found.");
+            noPartResults.setContentText("No parts match the search criteria.");
+            noPartResults.show();
+        }
     }
 
     /** This method displays products that fall under the search criteria. Text from the searchProductField is scraped and determined to be either an integer or a string. This data is then passed to the lookupProduct function from the Inventory class, which then returns the necessary products to be displayed.
@@ -319,6 +326,13 @@ public class AppController implements Initializable {
         }
         // sets productTable to display relevant information.
         productTable.setItems(nuProductList);
-        System.out.println(nuProductList.size());
+
+        if(nuProductList.size() == 0) {
+            Alert noProductResults = new Alert(Alert.AlertType.WARNING);
+            noProductResults.setTitle("Warning");
+            noProductResults.setHeaderText("No products found.");
+            noProductResults.setContentText("No products match the search criteria.");
+            noProductResults.show();
+        }
     }
 }
