@@ -38,6 +38,7 @@ public class AppController implements Initializable {
     public TextField searchPartField;
     public Button deletePartsButton;
     public TextField searchProductField;
+    public Label checkProdEmpty;
     @FXML
     private Label welcomeText;
 
@@ -192,14 +193,25 @@ public class AppController implements Initializable {
     }
 
     public void deleteProductCommand(ActionEvent actionEvent) {
+        boolean allowExecution = true;
+
         Alert confDel = new Alert(Alert.AlertType.CONFIRMATION);
         confDel.setTitle("Confirm deletion");
         confDel.setHeaderText("Deletion Warning");
         confDel.setContentText("Are you sure you want to delete this product?");
 
         Optional<ButtonType> result = confDel.showAndWait();
+        if(productTable.getSelectionModel().getSelectedItem().getAllAssociatedParts().size() != 0)
+        {
+            allowExecution = false;
+        }
         if (result.get() == ButtonType.OK) {
-            Inventory.deleteProduct(productTable.getSelectionModel().getSelectedItem());
+            if(allowExecution) {
+                Inventory.deleteProduct(productTable.getSelectionModel().getSelectedItem());
+            }
+            else {
+                checkProdEmpty.setText("This product has parts still associated to it.");
+            }
         }
     }
 

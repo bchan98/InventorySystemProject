@@ -102,4 +102,5 @@
          <Button fx:id="exitButton" mnemonicParsing="false" onAction="#closeProgram" text="Exit" />
       </children>
    </HBox>
+   <Label fx:id="checkProdEmpty" />
 </VBox>
