@@ -35,6 +35,9 @@ public class AppController implements Initializable {
     public TableColumn productInvCol;
     public TableColumn productPriceCol;
     public Button exitButton;
+    public TextField searchPartField;
+    public Button deletePartsButton;
+    public TextField searchProductField;
     @FXML
     private Label welcomeText;
 
@@ -182,7 +185,7 @@ public class AppController implements Initializable {
 
         Parent root = FXMLLoader.load(getClass().getResource("products-window.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 550, 800);
+        Scene scene = new Scene(root, 900, 700);
         stage.setTitle ("Add Products");
         stage.setScene(scene);
         stage.show();
@@ -214,9 +217,15 @@ public class AppController implements Initializable {
 
         Parent root = FXMLLoader.load(getClass().getResource("products-window.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 800);
+        Scene scene = new Scene(root, 600, 800);
         stage.setTitle ("Modify Parts");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void searchPart(ActionEvent actionEvent) {
+    }
+
+    public void searchProduct(ActionEvent actionEvent) {
     }
 }
