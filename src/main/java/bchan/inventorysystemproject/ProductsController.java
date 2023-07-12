@@ -245,19 +245,21 @@ public class ProductsController implements Initializable {
      * @param actionEvent This event triggers upon pressing the addAssPart button.
      */
     public void addAssociatePart(ActionEvent actionEvent) {
-        intAssociatedPartList.add((Part) availPartsTable.getSelectionModel().getSelectedItem());
-        // checks whether any parts have been added to the product before
-        if(isFirstAssItem) {
-            FilteredList<Part> showAssociatedPartList = new FilteredList<>(intAssociatedPartList, Part -> Part != null);
+        if(availPartsTable.getSelectionModel().getSelectedItem() != null) {
+            intAssociatedPartList.add((Part) availPartsTable.getSelectionModel().getSelectedItem());
+            // checks whether any parts have been added to the product before
+            if (isFirstAssItem) {
+                FilteredList<Part> showAssociatedPartList = new FilteredList<>(intAssociatedPartList, Part -> Part != null);
 
-            associatedPartsTable.setItems(intAssociatedPartList);
-            assIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-            assNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-            assInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-            assPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+                associatedPartsTable.setItems(intAssociatedPartList);
+                assIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+                assNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+                assInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+                assPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-            // boolean to inform the program that an part has been associated to the product
-            isFirstAssItem = false;
+                // boolean to inform the program that an part has been associated to the product
+                isFirstAssItem = false;
+            }
         }
     }
 
