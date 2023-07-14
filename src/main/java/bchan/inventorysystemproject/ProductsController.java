@@ -256,12 +256,12 @@ public class ProductsController implements Initializable {
      */
     public void addAssociatePart(ActionEvent actionEvent) {
         if(availPartsTable.getSelectionModel().getSelectedItem() != null) {
-            // adds part to the list
-            Product nuProduct = new Product(productIDCounter, "", 0, 0, 0, 0);
-            nuProduct.addAssociatedPart((availPartsTable.getSelectionModel().getSelectedItem()));
-            intAssociatedPartList = nuProduct.getAllAssociatedParts();
             // checks whether any parts have been added to the product before
             if (isFirstAssItem) {
+                // adds part to the list
+                Product nuProduct = new Product(productIDCounter, "", 0, 0, 0, 0);
+                nuProduct.addAssociatedPart((availPartsTable.getSelectionModel().getSelectedItem()));
+                intAssociatedPartList = nuProduct.getAllAssociatedParts();
                 // populates TableView with new information
                 associatedPartsTable.setItems(intAssociatedPartList);
                 assIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -271,6 +271,9 @@ public class ProductsController implements Initializable {
 
                 // boolean to inform the program that a part has been associated to the product
                 isFirstAssItem = false;
+            }
+            else {
+                intAssociatedPartList.add((availPartsTable.getSelectionModel().getSelectedItem()));
             }
         }
     }
