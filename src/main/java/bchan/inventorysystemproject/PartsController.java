@@ -128,7 +128,7 @@ public class PartsController implements Initializable{
      */
     public void setNewPart(ActionEvent actionEvent) throws IOException {
         // resets test variables
-        int setID = Integer.parseInt(partIDField.getText());
+        int setID;
         boolean allowExecution = true;
         boolean secondCheck = true;
         int setInv = 0;
@@ -211,6 +211,7 @@ public class PartsController implements Initializable{
                 }
                 partIDCounter++;
             } else {
+                setID = Integer.parseInt(partIDField.getText());
                 if (pOriginFlag) {
                     int addMachID = Integer.parseInt(varField.getText());
                     Part addedPart = new InHouse(partIDCounter, setName, setPri, setInv, setMinFi, setMaxFi, addMachID);
