@@ -297,7 +297,14 @@ public class ProductsController implements Initializable {
             else{
                 nuPartList = Inventory.lookupPart(availPartField.getText());
             }
+
+            if(nuPartList.size() == 0) {
+                Alert noPartResults = new Alert(Alert.AlertType.WARNING);
+                noPartResults.setTitle("Warning");
+                noPartResults.setHeaderText("No parts found.");
+                noPartResults.setContentText("No parts match the search criteria.");
+                noPartResults.show();
+            }
             availPartsTable.setItems(nuPartList);
-            System.out.println(nuPartList.size());
     }
 }

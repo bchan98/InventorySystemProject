@@ -91,35 +91,44 @@ public class AppController implements Initializable {
      **/
     public void modifyPartsWindow(ActionEvent actionEvent) throws IOException
     {
-        // this message informs the modify-part window that this part is to be modified.
-        message = false;
-        PartsController.setIsAddOrModify(message);
-
-        // requisite information from the part is then sent to the modify-part window
-        Part sendP = (Part) partsTable.getSelectionModel().getSelectedItem();
-        sendID = sendP.getId();
-        sendName = sendP.getName();
-        sendPrice = sendP.getPrice();
-        sendStock = sendP.getStock();
-        sendMin = sendP.getMin();
-        sendMax = sendP.getMax();
-
-        // logic check to determine the state of the radio button for InHouse/Outsourced at the modify-part window, as well as what data to send
-        if (sendP instanceof InHouse){
-            sendVarIn = ((InHouse) sendP).getMachineID();
-            sendInOut = true;
-        } else if (sendP instanceof Outsourced) {
-            sendVarOut = ((Outsourced) sendP).getCompanyName();
-            sendInOut = false;
+        if (partsTable.getSelectionModel().getSelectedItem()  == null) {
+            Alert noPartSel = new Alert(Alert.AlertType.WARNING);
+            noPartSel.setTitle("Warning");
+            noPartSel.setHeaderText("No part selected.");
+            noPartSel.setContentText("You haven't selected a part to be modified.");
+            noPartSel.show();
         }
+        else {
+            // this message informs the modify-part window that this part is to be modified.
+            message = false;
+            PartsController.setIsAddOrModify(message);
 
-        // draws the new scene
-        Parent root = FXMLLoader.load(getClass().getResource("partsModify.fxml"));
-        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 400);
-        stage.setTitle ("Modify Parts");
-        stage.setScene(scene);
-        stage.show();
+            // requisite information from the part is then sent to the modify-part window
+            Part sendP = (Part) partsTable.getSelectionModel().getSelectedItem();
+            sendID = sendP.getId();
+            sendName = sendP.getName();
+            sendPrice = sendP.getPrice();
+            sendStock = sendP.getStock();
+            sendMin = sendP.getMin();
+            sendMax = sendP.getMax();
+
+            // logic check to determine the state of the radio button for InHouse/Outsourced at the modify-part window, as well as what data to send
+            if (sendP instanceof InHouse) {
+                sendVarIn = ((InHouse) sendP).getMachineID();
+                sendInOut = true;
+            } else if (sendP instanceof Outsourced) {
+                sendVarOut = ((Outsourced) sendP).getCompanyName();
+                sendInOut = false;
+            }
+
+            // draws the new scene
+            Parent root = FXMLLoader.load(getClass().getResource("partsModify.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 600, 400);
+            stage.setTitle("Modify Parts");
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     @Override
@@ -247,25 +256,34 @@ public class AppController implements Initializable {
      * @throws IOException
      */
     public void modifyProductsWindow(ActionEvent actionEvent) throws IOException {
-        // this message informs the products-modify window that the product is to be modified
-        message = false;
-        ProductsController.setIsAddOrModify(message);
+        if (productTable.getSelectionModel().getSelectedItem()  == null) {
+            Alert noProductSel = new Alert(Alert.AlertType.WARNING);
+            noProductSel.setTitle("Warning");
+            noProductSel.setHeaderText("No product selected.");
+            noProductSel.setContentText("You haven't selected a product to be modified.");
+            noProductSel.show();
+        }
+        else {
+            // this message informs the products-modify window that the product is to be modified
+            message = false;
+            ProductsController.setIsAddOrModify(message);
 
-        // product data is sent to the products-modify window
-        Product sendPro = (Product) productTable.getSelectionModel().getSelectedItem();
-        sendID = sendPro.getId();
-        sendName = sendPro.getName();
-        sendPrice = sendPro.getPrice();
-        sendStock = sendPro.getStock();
-        sendMin = sendPro.getMin();
-        sendMax = sendPro.getMax();
+            // product data is sent to the products-modify window
+            Product sendPro = (Product) productTable.getSelectionModel().getSelectedItem();
+            sendID = sendPro.getId();
+            sendName = sendPro.getName();
+            sendPrice = sendPro.getPrice();
+            sendStock = sendPro.getStock();
+            sendMin = sendPro.getMin();
+            sendMax = sendPro.getMax();
 
-        Parent root = FXMLLoader.load(getClass().getResource("products-window.fxml"));
-        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 900, 700);
-        stage.setTitle ("Modify Parts");
-        stage.setScene(scene);
-        stage.show();
+            Parent root = FXMLLoader.load(getClass().getResource("products-window.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 900, 700);
+            stage.setTitle("Modify Parts");
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     /** This method displays parts that fall under the search criteria. Text from the searchPartField is scraped and determined to either be an integer or a string. This data is then passed to the lookupPart function from the Inventory class which then returns the necessary parts to be displayed.
