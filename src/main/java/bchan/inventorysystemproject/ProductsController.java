@@ -130,7 +130,7 @@ public class ProductsController implements Initializable {
     }
 
     /** This method saves changes made to the product. This method carries out a basic logic check to determine all data inputted is valid before saving the product to the allProducts list from the Inventory class.
-     *
+     * FUTURE ENHANCEMENT: Provide a window showing most associated parts as a suggestion for any possible parts to be added.
      * @param actionEvent This event triggers upon pressing the saveProductButton.
      * @throws IOException
      */
@@ -251,7 +251,7 @@ public class ProductsController implements Initializable {
     }
 
     /** This method adds an associated part to the product. The selected part from the availParts TableView is added to the list of associated parts.
-     *
+     * RUNTIME ERROR: Previously, an exception occurred when adding associate parts to the product, stating an InvokationException occured. This is due to the fact that no product object existed within this method. To solve this, a product was constructed to serve as the placeholder for the associatedPartsList.
      * @param actionEvent This event triggers upon pressing the addAssPart button.
      */
     public void addAssociatePart(ActionEvent actionEvent) {

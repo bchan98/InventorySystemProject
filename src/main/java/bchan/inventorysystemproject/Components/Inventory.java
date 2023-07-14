@@ -91,7 +91,8 @@ public class Inventory {
     }
 
     /** This method removes a product. The product removed is based off the parameters given and removed from the allProducts list.
-     *
+     * RUNTIME ERROR: Previously, there was an issue where there was an InvocationException due to allProducts grabbing a null object. This was corrected by adding an if statement to check if the object was null.
+     * FUTURE ENHANCEMENT: Provide an buffer list containing deleted products/parts when required.
      * @param passProduct The product to be removed.
      * @return Returns true if removal was successful, false if removal failed.
      */

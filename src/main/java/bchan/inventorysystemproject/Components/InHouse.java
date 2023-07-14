@@ -5,7 +5,8 @@ public class InHouse extends Part {
     private int machineID;
 
     /** This constructor inherits from the abstract Parts class, and adds in an additional machine ID parameter
-     *
+     * RUNTIME ERROR: Previously, machineID was not functioning properly - this was because it was not included in the constructor, and the "this" predicate was not used.
+     * FUTURE ENHANCEMENT: Provide the object with a priority attribute, to indicate the necessity of this product.
      * @param id The part ID
      * @param name The part name
      * @param price The part price

@@ -123,6 +123,8 @@ public class PartsController implements Initializable{
 
     /** This method attempts to save data to the allParts list.
      * Sets part information to allParts from the Inventory class. Scrapes data from the text fields and uses the information to generate a new Part object which is then sent and stored in the allParts list.
+     * RUNTIME ERROR: Initially, a numberFormatException occurred when saving a new part. This occurred because when a new part is added, the textfield stating the part ID simply displays "Autogen - do not modify". The program was attempting to parseInt this value, which yielded the exception. To solve this, the program only grabs partID if the part is being modified. Additionally, partID is now kept in a static variable to ensure all parts have unique partIDs.
+     * FUTURE ENHANCEMENT: Add a unmodifiable set of text fields showing the current values to provide a reference versus any modifications being made.
      * @param actionEvent
      * @throws IOException
      */

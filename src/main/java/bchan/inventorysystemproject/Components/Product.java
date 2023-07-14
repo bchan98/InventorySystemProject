@@ -14,7 +14,7 @@ public class Product{
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     /** The constructor to determine a product's information.
-     *
+     * FUTURE ENHANCEMENT: Possible for a future enhancement to show previous prices of the product, to show historical data.
      * @param id The product ID.
      * @param name The name of the product.
      * @param price The price of the product.
@@ -130,7 +130,7 @@ public class Product{
     }
 
     /** Removes an associated part. Removes the associated part from the parameter from the associatedPart list.
-     *
+     * RUNTIME ERROR: Initially, there was an issue with deleting parts, where the wrong part was deleted. This occurred due to the loop running previously being a for loop, with index running until index <= the size of the list. This was resolved by swapping to a while loop. This could also have been fixed by changing the for loop to run until index < the size of the list, although it would be less efficient than a while loop.
      * @param passPart The part to be removed from the associatedParts list.
      * @return Returns true if deletion was successful.
      */
