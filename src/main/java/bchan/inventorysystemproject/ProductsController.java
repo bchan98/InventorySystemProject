@@ -71,14 +71,11 @@ public class ProductsController implements Initializable {
         if(isTrigger) {
             prodWindowLabel.setText("Add Product");
             prodIDField.setText(String.valueOf(productIDCounter));
-
-            Product nuProduct = new Product(productIDCounter, "", 0, 0, 0, 1);
-            ObservableList<Part> intAssociatedPartList = nuProduct.getAllAssociatedParts();
-
             isFirstAssItem = true;
         }
         else {
             prodWindowLabel.setText("Modify Product");
+
             // populates data into relevant text fields
             prodIDField.setText(String.valueOf(AppController.sendID));
             prodNameField.setText(AppController.sendName);
@@ -86,16 +83,24 @@ public class ProductsController implements Initializable {
             prodPriceField.setText(String.valueOf(AppController.sendPrice));
             prodMinField.setText(String.valueOf(AppController.sendMin));
             prodMaxField.setText(String.valueOf(AppController.sendMax));
+
             // obtains the associated parts to the relevant product
             Product nuProduct = Inventory.getAllProducts().get((Integer.parseInt(prodIDField.getText())) - 1);
             intAssociatedPartList = nuProduct.getAllAssociatedParts();
-            // populates TableView with associated part information
-            associatedPartsTable.setItems(intAssociatedPartList);
-            assIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-            assNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-            assInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-            assPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+            // checks if any associated parts exist
+            if(intAssociatedPartList.size() == 0) {
+                isFirstAssItem = true;
+            }
+            else {
+                isFirstAssItem = false;
+                // populates TableView with associated part information
+                associatedPartsTable.setItems(intAssociatedPartList);
+                assIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+                assNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+                assInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+                assPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+            }
         }
         // populates TableView with available parts to be added
         intAvailablePartList = Inventory.getAllParts();
@@ -131,6 +136,7 @@ public class ProductsController implements Initializable {
      */
     public void saveChanges(ActionEvent actionEvent) throws IOException {
         // initializes variables
+        allowExecution = true;
         int setID = Integer.parseInt(prodIDField.getText());
         String setName = prodNameField.getText();
         int setInv = 0;
@@ -197,6 +203,10 @@ public class ProductsController implements Initializable {
             setMax = Integer.parseInt(prodMaxField.getText());
             Product nuProduct = new Product(setID, setName, setPrice, setInv, setMin, setMax);
 
+            for (int nIndex = 0; nIndex < intAssociatedPartList.size(); nIndex ++) {
+                nuProduct.addAssociatedPart(intAssociatedPartList.get(nIndex));
+            }
+
             if (isTrigger) {
                 Inventory.addProduct(nuProduct);
                 productIDCounter++;
@@ -246,18 +256,20 @@ public class ProductsController implements Initializable {
      */
     public void addAssociatePart(ActionEvent actionEvent) {
         if(availPartsTable.getSelectionModel().getSelectedItem() != null) {
-            intAssociatedPartList.add((Part) availPartsTable.getSelectionModel().getSelectedItem());
+            // adds part to the list
+            Product nuProduct = new Product(productIDCounter, "", 0, 0, 0, 0);
+            nuProduct.addAssociatedPart((availPartsTable.getSelectionModel().getSelectedItem()));
+            intAssociatedPartList = nuProduct.getAllAssociatedParts();
             // checks whether any parts have been added to the product before
             if (isFirstAssItem) {
-                FilteredList<Part> showAssociatedPartList = new FilteredList<>(intAssociatedPartList, Part -> Part != null);
-
+                // populates TableView with new information
                 associatedPartsTable.setItems(intAssociatedPartList);
                 assIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
                 assNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
                 assInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
                 assPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-                // boolean to inform the program that an part has been associated to the product
+                // boolean to inform the program that a part has been associated to the product
                 isFirstAssItem = false;
             }
         }

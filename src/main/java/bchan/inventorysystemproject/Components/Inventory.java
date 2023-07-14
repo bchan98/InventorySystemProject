@@ -120,6 +120,7 @@ public class Inventory {
         modProduct.setStock(passProduct.getStock());
         modProduct.setMax(passProduct.getMax());
         modProduct.setMin(passProduct.getMin());
+        modProduct.getAllAssociatedParts().setAll(passProduct.getAllAssociatedParts());
     }
 
     /** This method searches for a part and returns a list with matching parts. The part ID is used as the parameter for search, and any parts matching the partID are added to the list to be returned.
