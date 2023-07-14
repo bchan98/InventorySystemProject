@@ -95,6 +95,7 @@ public class PartsController implements Initializable{
         // checks whether a part is being added or modified
         if (isTrigger){
             isAddOrModify.setText("Add Part");
+            partIDField.setText(String.valueOf(partIDCounter));
         }
         else {
             isAddOrModify.setText("Modify Part");
