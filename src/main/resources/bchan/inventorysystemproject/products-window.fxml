@@ -181,6 +181,7 @@
                     <Insets left="5.0" right="5.0" />
                  </VBox.margin>
               </GridPane>
+               <Label fx:id="checkNameVal" />
                <Label fx:id="checkInvInt" />
                <Label fx:id="checkPrDoub" />
                <Label fx:id="checkMaxInt" />

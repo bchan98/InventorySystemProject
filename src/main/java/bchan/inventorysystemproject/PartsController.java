@@ -35,6 +35,7 @@ public class PartsController implements Initializable{
     public Label checkVarInt;
     public Label checkMinMax;
     public Label checkInvValid;
+    public Label checkNameVal;
     @FXML
     private Label welcomeText;
 
@@ -141,6 +142,7 @@ public class PartsController implements Initializable{
         String setName = partNameField.getText();
 
         // clears any error messages that may have previously appeared
+        checkNameVal.setText("");
         checkInvInt.setText("");
         checkPrDoub.setText("");
         checkMaxInt.setText("");
@@ -150,6 +152,10 @@ public class PartsController implements Initializable{
         checkVarInt.setText("");
 
         // checks logic to determine whether correct values have been supplied to each field
+        if (setName.trim().isEmpty() == true) {
+            allowExecution = false;
+            checkNameVal.setText("Currently there is no name given to this part. Please enter in a name.");
+        }
         try {
             setInv = Integer.parseInt(partInvField.getText());
         } catch (NumberFormatException numberFormatException){

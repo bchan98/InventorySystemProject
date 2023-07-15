@@ -92,7 +92,8 @@
             </HBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="checkInvInt" />
+                   <Label fx:id="checkNameVal" />
+                   <Label fx:id="checkInvInt" />
                   <Label fx:id="checkPrDoub" />
                   <Label fx:id="checkMaxInt" />
                   <Label fx:id="checkMinInt" />

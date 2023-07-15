@@ -53,6 +53,7 @@ public class ProductsController implements Initializable {
     public Label checkMinInt;
     public Label checkMinMax;
     public Label checkInvValid;
+    public Label checkNameVal;
 
     private boolean isFirstAssItem = false;
 
@@ -145,6 +146,7 @@ public class ProductsController implements Initializable {
         int setMax = 0;
 
         // clears text fields that may have previously had errors
+        checkNameVal.setText("");
         checkInvInt.setText("");
         checkPrDoub.setText("");
         checkMaxInt.setText("");
@@ -153,6 +155,10 @@ public class ProductsController implements Initializable {
         checkInvValid.setText("");
 
         // checks logic to determine whether correct values have been supplied to each field
+        if (setName.trim().isEmpty() == true) {
+            allowExecution = false;
+            checkNameVal.setText("Currently there is no name given to this product. Please enter in a name.");
+        }
         try {
             setInv = Integer.parseInt(prodInvField.getText());
         } catch (NumberFormatException numberFormatException){
